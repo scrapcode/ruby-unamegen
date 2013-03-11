@@ -81,30 +81,18 @@ class Unamegen
 
 end
 
-10.times do
+20.times do
   u = Unamegen.new
   username = u.generate
-
-  print username
-
-  if u.check_dotcom(username)
-    print " | .com avail"
-  else
-    print " | .com taken"
+  stat_dotcom = u.check_dotcom(username)
+  if stat_dotcom
+    stat_twitter = u.check_twitter(username)
+  end
+  if stat_twitter
+    stat_github = u.check_github(username)
   end
 
-  if u.check_twitter(username)
-    print " | twit avail"
-  else
-    print " | twit taken"
-  end
+  puts username if stat_github
 
-  if u.check_github(username)
-    print " | github avail"
-  else
-    print " | github taken"
-  end
-
-  print "\n"
-  sleep 1 # whois will start to refuse connections if done too fast.
+  sleep 0.5 # whois will start to refuse connections if done too fast.
 end
