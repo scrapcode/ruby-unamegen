@@ -30,31 +30,36 @@ class Unamegen
   def check_twitter(username)
     req_url = "https://twitter.com/" + username
     req = open(req_url)
-    if req.status[0] == 200
+    if req.status[0] == "200"
       false
-    elsif req.status[0] == 404
+      #puts "TC: ES 200"
+    elsif req.status[0] == "404"
       true
+      #puts "TC: ES 404"
     else
       true
+      #puts "TC: ES else: " + req.status[0] + req.status[1]
     end
   rescue Exception => e
     case e.message
       when /404/ then
         return true
+        #puts "TC: ES 404 exception"
       when /505/ then
         return true
+        #puts "TC: ES 505 exception"
       else
-        log(username + " other error: " + e.message)
         return true
+        #puts "TC: other exception: " + e.message
     end
   end
 
   def check_github(username)
-    req_url = "http://www.github.com/" + username
+    req_url = "https://github.com/" + username
     req = open(req_url)
-    if req.status[0] == 200
+    if req.status[0] == "200"
       false
-    elsif req.status[0] == 404
+    elsif req.status[0] == "404"
       true
     else
       true
@@ -76,7 +81,7 @@ class Unamegen
 
 end
 
-3.times do
+10.times do
   u = Unamegen.new
   username = u.generate
 
@@ -101,5 +106,5 @@ end
   end
 
   print "\n"
-  sleep 1.5 # whois will start to refuse connections if done too fast.
+  sleep 1 # whois will start to refuse connections if done too fast.
 end
